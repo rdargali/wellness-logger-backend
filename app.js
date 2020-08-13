@@ -1,25 +1,48 @@
 const express = require("express");
 const app = express();
+const PORT = process.env.PORT || 3000;
+const cors = require("cors");
+app.use(cors());
+app.use(express.json());
 
 //mongodb
 const mongoose = require("mongoose");
 const db = mongoose.connection;
-mongoose.connect("mongodb://localhost/test", {
+mongoose.connect("mongodb://localhost:27017/wellness-logger", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-  console.log("MongoDB connected");
+db.once("open", (err) => {
+  if (err) {
+    console.log("MongoDB connection unsuccessful");
+  } else {
+    console.log("MongoDB connected");
+  }
 });
 
-//mongoose
-const mongoose = require("mongoose");
-const user = require("./user");
-const entry = require("./entry");
+//schemas
+const user = require("./models/user");
+const entry = require("./models/entry");
 
-const PORT = process.env.PORT || 3000;
+app.post("/user", async (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  const newUser = new user({
+    username: username,
+    password: password,
+  });
+
+  const savedUser = await newUser.save();
+
+  if (savedUser) {
+    res.json(savedUser);
+  } else {
+    res.status(500).json({ msg: "Unable to save user" });
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("hi");
