@@ -14,6 +14,11 @@ db.once("open", () => {
   console.log("MongoDB connected");
 });
 
+//mongoose
+const mongoose = require("mongoose");
+const user = require("./user");
+const entry = require("./entry");
+
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
