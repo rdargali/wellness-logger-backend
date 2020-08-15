@@ -44,6 +44,28 @@ app.post("/user", async (req, res) => {
   }
 });
 
+app.post("/entry", async (req, res) => {
+  let title = req.body.title;
+  let rating = req.body.rating;
+  let description = req.body.description;
+  let date = req.body.date;
+
+  const newEntry = new entry({
+    title: title,
+    rating: rating,
+    description: description,
+    date: date,
+  });
+
+  const savedEntry = await newEntry.save();
+
+  if (savedEntry) {
+    res.json(savedEntry);
+  } else {
+    res.status(500).json({ msg: "Unable to save entry" });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("hi");
 });
