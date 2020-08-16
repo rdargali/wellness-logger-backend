@@ -14,7 +14,8 @@ mongoose.connect("mongodb://localhost:27017/wellness-logger", {
   useUnifiedTopology: true,
 });
 
-db.on("error", console.error.bind(console, "connection error:"));
+// db.on("error", console.error.bind(console, "connection error:"));
+
 db.once("open", (err) => {
   if (err) {
     console.log("MongoDB connection unsuccessful");
