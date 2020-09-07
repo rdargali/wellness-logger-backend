@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 app.use(cors());
@@ -48,13 +48,13 @@ app.post("/entry", async (req, res) => {
   let title = req.body.title;
   let rating = req.body.rating;
   let description = req.body.description;
-  let date = req.body.date;
+  let user = req.body.user;
 
   const newEntry = new entry({
     title: title,
     rating: rating,
     description: description,
-    date: date,
+    user: user,
   });
 
   const savedEntry = await newEntry.save();
