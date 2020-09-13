@@ -17,7 +17,7 @@ mongoose.connect("mongodb://localhost:27017/wellness-logger", {
 
 db.once("open", (err) => {
   if (err) {
-    console.log("MongoDB connection unsuccessful");
+    console.log("MongoDB connection not successful");
   } else {
     console.log("MongoDB connected");
   }
